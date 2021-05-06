@@ -1,31 +1,47 @@
 <template>
-    <h1>{{arreglo.title}}</h1>
-    <p>{{arreglo.body}}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <lista-articulos />
+            </div>
+            <div class="col-9">
+                <h1>{{arregloDetalle.title}}</h1>
+                <p>{{arregloDetalle.body}}</p>
+            </div>
+        </div>
+    </div>
+    
 </template>
 
 <script>
+import ListaArticulos from '../components/ListaArticulos.vue'
     export default {
+  components: { ListaArticulos },
     data() {
         return {
-            arreglo: []
+            arregloDetalle: []
         }
     },
     methods:{
-        async consumirApiArticulos(){
+        async consumirApiArticulosDetalle(){
             try {
                 const url = 'https://jsonplaceholder.typicode.com/posts/'+`${this.$route.params.id}`
                 const data = await fetch(url)
-                const array = await data.json()
-                console.log(array)
-                this.arreglo = array
+                const arrayDetalle = await data.json()
+                console.log(arrayDetalle)
+                this.arregloDetalle = arrayDetalle
            } catch (error) {
                 
             }
         }
     },
     created(){
-        this.consumirApiArticulos()
+        this.consumirApiArticulosDetalle()
+    },
+    updated(){
+        this.consumirApiArticulosDetalle()
     }
+
 }
 
 </script>
